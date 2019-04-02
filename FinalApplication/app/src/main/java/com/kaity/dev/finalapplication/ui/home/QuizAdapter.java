@@ -48,7 +48,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull QuizAdapter.QuizViewHolder quizViewHolder, int i) {
-
+        quizViewHolder.bind(i);
     }
 
     @Override

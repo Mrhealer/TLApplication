@@ -16,6 +16,8 @@ import com.kaity.dev.finalapplication.data.models.User;
 import com.kaity.dev.finalapplication.data.remote.FirebaseHandler;
 import com.kaity.dev.finalapplication.data.remote.FirebaseProvider;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 public class AppDataHandler implements DataHandler {
@@ -51,38 +53,39 @@ public class AppDataHandler implements DataHandler {
             @Override
             public void onReponse(List<Quiz> quizzes) {
 
-//                // Fetch user info to get bookmarks and attempted quizzes
-//                mFirebaseHandler.fetchUserInfo(null, new FirebaseHandler.Callback<User>() {
-//                    @Override
-//                    public void onReponse(User result) {
-//                        Collection<QuizAttempted> attemptedQuizzes = new HashSet<>();
-//                        if (result.getAttemptedList() != null) {
-//                            attemptedQuizzes = result.getAttemptedList().values();
-//                        }
-//
-//                        // Mark attempted quizzes
-//                        for (Quiz singleQuiz : quizzes) {
-//                            for (QuizAttempted attempt : attemptedQuizzes) {
-//                                if (singleQuiz.getKey().equalsIgnoreCase(attempt.getQuizId())) {
-//                                    singleQuiz.setAttempted(true);
-//                                    break;
-//                                }
-//                            }
-//                            if (result.getBookmarks() != null && result.getBookmarks().containsKey(singleQuiz.getKey())) {
-//                                singleQuiz.setBookmarked(result.getBookmarks().get(singleQuiz.getKey()));
-//                            }
-//                        }
-//
-//                        callback.onResponse(quizzes);
-//                        mFirebaseHandler.destroy();
-//                    }
-//
-//
-//                    @Override
-//                    public void onError() {
-//                        callback.onError();
-//                    }
-//                });
+                // Fetch user info to get bookmarks and attempted quizzes
+                mFirebaseHandler.fetchUserInfo(null, new FirebaseHandler.Callback<User>() {
+                    @Override
+                    public void onReponse(User result) {
+                        Collection<QuizAttempted> attemptedQuizzes = new HashSet<>();
+                        if (result.getAttemptedList() != null) {
+                            attemptedQuizzes = result.getAttemptedList().values();
+                        }
+
+                        // Mark attempted quizzes
+                        for (Quiz singleQuiz : quizzes) {
+                            for (QuizAttempted attempt : attemptedQuizzes) {
+                                if (singleQuiz.getKey().equalsIgnoreCase(attempt.getQuizId())) {
+                                    singleQuiz.setAttempted(true);
+                                    break;
+                                }
+                            }
+                            if (result.getBookmarks() != null && result.getBookmarks().containsKey(singleQuiz.getKey())) {
+                                singleQuiz.setBookmarked(result.getBookmarks().get(singleQuiz.getKey()));
+                            }
+                        }
+
+                        callback.onResponse(quizzes);
+                        mFirebaseHandler.destroy();
+                    }
+
+
+                    @Override
+                    public void onError() {
+                        callback.onError();
+                    }
+                });
+                callback.onResponse(quizzes);
             }
         });
     }
@@ -94,25 +97,25 @@ public class AppDataHandler implements DataHandler {
             @Override
             public void onReponse(Quiz fetchedQuiz) {
 
-//                mFirebaseHandler.fetchUserScore(quizId, new FirebaseHandler.Callback<Integer>() {
-//                    @Override
-//                    public void onReponse(Integer result) {
-//                        if (result != null && result >= 0) {
-//                            fetchedQuiz.setAttempted(true);
-//                            // If scholar has already attempted the quiz setting the score in
-//                            // Rated-by field, is it not used anyway
-//                            fetchedQuiz.setRatedBy(result);
-//                        }
-//                        callback.onResponse(fetchedQuiz);
-//                        mFirebaseHandler.destroy();
-//                    }
-//
-//                    @Override
-//                    public void onError() {
-//                        callback.onResponse(fetchedQuiz);
-//                        mFirebaseHandler.destroy();
-//                    }
-//                });
+                mFirebaseHandler.fetchUserScore(quizId, new FirebaseHandler.Callback<Integer>() {
+                    @Override
+                    public void onReponse(Integer result) {
+                        if (result != null && result >= 0) {
+                            fetchedQuiz.setAttempted(true);
+                            // If scholar has already attempted the quiz setting the score in
+                            // Rated-by field, is it not used anyway
+                            fetchedQuiz.setRatedBy(result);
+                        }
+                        callback.onResponse(fetchedQuiz);
+                        mFirebaseHandler.destroy();
+                    }
+
+                    @Override
+                    public void onError() {
+                        callback.onResponse(fetchedQuiz);
+                        mFirebaseHandler.destroy();
+                    }
+                });
             }
 
             @Override
