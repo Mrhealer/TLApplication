@@ -1,7 +1,14 @@
 package com.kaity.dev.finalapplication.data.remote;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.kaity.dev.finalapplication.data.models.Comment;
 import com.kaity.dev.finalapplication.data.models.NotificationPrefs;
 import com.kaity.dev.finalapplication.data.models.Quiz;
@@ -13,11 +20,61 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FirebaseHandlerImpl implements FirebaseHandler {
+
+    private static final String KEY_LAST_MODIFIED = "last-modified";
+
+    private DatabaseReference mQuizzesRef;
+
+    private List<ValueEventListener> mValueListeners;
+
+    FirebaseHandlerImpl(){
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference rootRef = firebaseDatabase.getReference();
+
+        mValueListeners = new ArrayList<>();
+
+        mQuizzesRef = rootRef.child(REF_QUIZZES_NODE);
+    }
+
     @Override
     public void fetchQuizzes(int limitToFirst, Callback<List<Quiz>> callback) {
-        List<Quiz> quizList = new ArrayList<>();
-        quizList.add(new Quiz("Vishal Sehgal's ID","Vishal Sehgal","Basic quiz for RecyclerView","easy",null,"2018-03-25",4,9,null,0,0.0,"Recycler View Quiz 1","2018-03-25",false,false,"Lesson-4-RecyclerView-Quiz-1"));
-        callback.onReponse(quizList);
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot != null) {
+                    List<Quiz> quizList = new ArrayList<>();
+                    for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                        try {
+                            Quiz singleQuiz = childSnapshot.getValue(Quiz.class);
+                            if (singleQuiz != null && singleQuiz.getTitle() != null) {
+                                singleQuiz.setKey(childSnapshot.getKey());
+                                Log.d("LongKAKA","fetchQuizzes: "+ singleQuiz);
+                                quizList.add(singleQuiz);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    Log.d("LongKAKA","fetchQuizzes: "+ quizList);
+                    callback.onReponse(quizList);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                callback.onError();
+            }
+        };
+
+        Query quizzesRefQuery = mQuizzesRef.orderByChild(KEY_LAST_MODIFIED);
+
+        // TODO: Implement pagination here.
+        if (limitToFirst > 0) {
+            quizzesRefQuery.limitToFirst(limitToFirst);
+        }
+        quizzesRefQuery.addValueEventListener(listener);
+        mValueListeners.add(listener);
     }
 
     @Override

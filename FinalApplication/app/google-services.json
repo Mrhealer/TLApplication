@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "214515494200",
+    "firebase_url": "https://finalapplication-d913b.firebaseio.com",
+    "project_id": "finalapplication-d913b",
+    "storage_bucket": "finalapplication-d913b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214515494200:android:441666233cce2b5d",
+        "android_client_info": {
+          "package_name": "com.kaity.dev.finalapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214515494200-1bkunsoa67tblqo4iodd8aujvl0uvm9j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kaity.dev.finalapplication",
+            "certificate_hash": "2529fb015ec55fc3bcaf5a8a46995f82d9464c5d"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWT4OcchL-KBYwUZIJQ37ze8unks3-3wU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214515494200-88r445o3ig3r6i7qdgfecmnmfmh6eem7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

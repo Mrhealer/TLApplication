@@ -36,4 +36,10 @@ dependencies {
     implementation "com.mikhaellopez:circularimageview:$rootProject.circleimageviewVersion"
     implementation group: 'com.google.code.gson', name: 'gson', version: "$rootProject.gsonVersion"
 
+    implementation 'com.google.firebase:firebase-messaging:11.8.0'
+    implementation 'com.google.firebase:firebase-database:11.8.0'
+    implementation 'com.google.firebase:firebase-storage:11.8.0'
+    implementation 'com.google.firebase:firebase-auth:11.8.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

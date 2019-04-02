@@ -12,25 +12,6 @@ import java.util.Objects;
 
 public class Quiz {
 
-    public Quiz(String mCreatorId, String mCreatorName, String mDescription, String mDifficulty, Map<String, String> mFiles, String mLastModified, int mLesson, int mMaxMarks, Map<String, Question> mQuestions, int mRatedBy, double mRating, String mTitle, String mDeadline, boolean mAttempted, boolean mIsBookmarked, String mKey) {
-        this.mCreatorId = mCreatorId;
-        this.mCreatorName = mCreatorName;
-        this.mDescription = mDescription;
-        this.mDifficulty = mDifficulty;
-        this.mFiles = mFiles;
-        this.mLastModified = mLastModified;
-        this.mLesson = mLesson;
-        this.mMaxMarks = mMaxMarks;
-        this.mQuestions = mQuestions;
-        this.mRatedBy = mRatedBy;
-        this.mRating = mRating;
-        this.mTitle = mTitle;
-        this.mDeadline = mDeadline;
-        this.mAttempted = mAttempted;
-        this.mIsBookmarked = mIsBookmarked;
-        this.mKey = mKey;
-    }
-
     @Expose
     @SerializedName("creator-id")
     private String mCreatorId;
