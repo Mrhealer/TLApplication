@@ -41,6 +41,13 @@ import com.bumptech.glide.Glide;
 import com.kaity.dev.finalapplication.R;
 import com.kaity.dev.finalapplication.data.models.Quiz;
 import com.kaity.dev.finalapplication.ui.PresenterInjector;
+import com.kaity.dev.finalapplication.ui.discussion.QuizDiscussionActivity;
+import com.kaity.dev.finalapplication.ui.discussion.QuizDiscussionContract;
+import com.kaity.dev.finalapplication.ui.notification.NotificationActivity;
+import com.kaity.dev.finalapplication.ui.quizdetails.QuizDetailsActivity;
+import com.kaity.dev.finalapplication.ui.quizdetails.QuizDetailsContract;
+import com.kaity.dev.finalapplication.ui.settings.SettingsActivity;
+import com.kaity.dev.finalapplication.utils.AppConstants;
 import com.kaity.dev.finalapplication.utils.Connectivity;
 
 import java.util.List;
@@ -409,9 +416,9 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     public void navigateToQuizDesc(Quiz quiz) {
 // TODO: Navigate to QuizDescription Activity, use the quiz object above to extract quiz
         // TODO: details etc and pass as intent parameter.
-//        Intent quizDetailsIntent = new Intent(this, QuizDetailsActivity.class);
-//        quizDetailsIntent.putExtra(QuizDetailsContract.KEY_QUIZ_ID, quiz.getKey());
-//        startActivity(quizDetailsIntent);
+        Intent quizDetailsIntent = new Intent(this, QuizDetailsActivity.class);
+        quizDetailsIntent.putExtra(QuizDetailsContract.KEY_QUIZ_ID, quiz.getKey());
+        startActivity(quizDetailsIntent);
         overridePendingTransition(R.anim.slide_in_up, R.anim.anim_nothing);
     }
 
@@ -429,21 +436,21 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 
     @Override
     public void navigateToNotifications() {
-//        Intent notificationIntent = new Intent(this, NotificationActivity.class);
-//        startActivity(notificationIntent);
+        Intent notificationIntent = new Intent(this, NotificationActivity.class);
+        startActivity(notificationIntent);
     }
 
     @Override
     public void navigateToResources() {
-//        Intent resourcesIntent = new Intent(this, NotificationActivity.class);
-//        resourcesIntent.putExtra(AppConstants.NOTIFICATION_TYPE_RESOURCES, true);
-//        startActivity(resourcesIntent);
+        Intent resourcesIntent = new Intent(this, NotificationActivity.class);
+        resourcesIntent.putExtra(AppConstants.NOTIFICATION_TYPE_RESOURCES, true);
+        startActivity(resourcesIntent);
     }
 
     @Override
     public void navigateToSettings() {
-//        Intent settingsIntent = new Intent(this, SettingsActivity.class);
-//        startActivity(settingsIntent);
+        Intent settingsIntent = new Intent(this, SettingsActivity.class);
+        startActivity(settingsIntent);
     }
 
     @Override
@@ -460,16 +467,16 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 
     @Override
     public void navigateToQuizDiscussion(String quizId) {
-//        Intent quizDiscussionIntent = new Intent(this, QuizDiscussionActivity.class);
-//        quizDiscussionIntent.putExtra(QuizDiscussionContract.KEY_QUIZ_ID, quizId);
-//        startActivity(quizDiscussionIntent);
+        Intent quizDiscussionIntent = new Intent(this, QuizDiscussionActivity.class);
+        quizDiscussionIntent.putExtra(QuizDiscussionContract.KEY_QUIZ_ID, quizId);
+        startActivity(quizDiscussionIntent);
     }
 
     @Override
     public void navigateToQuizDetails(String quizId) {
-//        Intent quizDetailsIntent = new Intent(this, QuizDiscussionActivity.class);
-//        quizDetailsIntent.putExtra(QuizDetailsContract.KEY_QUIZ_ID, quizId);
-//        startActivity(quizDetailsIntent);
+        Intent quizDetailsIntent = new Intent(this, QuizDiscussionActivity.class);
+        quizDetailsIntent.putExtra(QuizDetailsContract.KEY_QUIZ_ID, quizId);
+        startActivity(quizDetailsIntent);
     }
 
     @Override

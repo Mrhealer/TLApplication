@@ -3,6 +3,7 @@ package com.kaity.dev.finalapplication.data.remote;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -79,17 +80,73 @@ public class FirebaseHandlerImpl implements FirebaseHandler {
 
     @Override
     public void fetchAttemptedQuizzes(Callback<List<QuizAttempted>> callback) {
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot != null) {
+                    List<QuizAttempted> quizzesAttempted = new ArrayList<>();
+                    for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                        try {
+                            QuizAttempted singleQuizAttempted = childSnapshot.getValue(QuizAttempted.class);
+                            if (singleQuizAttempted != null && singleQuizAttempted.getQuizTitle() != null) {
+                                singleQuizAttempted.setKey(childSnapshot.getKey());
+                                quizzesAttempted.add(singleQuizAttempted);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Log.d("LongKAKA","fetchQuizzes: "+ quizzesAttempted);
+                    callback.onReponse(quizzesAttempted);
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                callback.onError();
+            }
+        };
+
+//        if (mCurrentUser == null) {
+//            mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+//        }
+//
+//        mUsersRef.child(mCurrentUser.getUid()).child(KEY_USER_ATTEMPTED_QUIZ)
+//                .addValueEventListener(listener);
+        mValueListeners.add(listener);
     }
 
     @Override
     public void fetchQuizById(String quizId, Callback<Quiz> callback) {
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot != null) {
+                    Quiz singleQuiz = snapshot.getValue(Quiz.class);
+                    if (singleQuiz != null) {
+                        singleQuiz.setKey(snapshot.getKey());
+                        callback.onReponse(singleQuiz);
+                    } else {
+                        callback.onError();
+                    }
+                } else {
+                    callback.onError();
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                callback.onError();
+            }
+        };
+
+        mQuizzesRef.child(quizId).addValueEventListener(listener);
+        mValueListeners.add(listener);
     }
 
     @Override
     public void updateSlackHandle(String slackHandle, Callback<Void> callback) {
-
+//        updateUserProperty(KEY_SLACK_HANDLE, slackHandle, callback);
     }
 
     @Override
@@ -139,7 +196,7 @@ public class FirebaseHandlerImpl implements FirebaseHandler {
 
     @Override
     public void updateMyAttemptedQuizzes(QuizAttempted quizAttempt, Callback<Void> callback) {
-
+            callback.onReponse(null);
     }
 
     @Override
@@ -180,5 +237,21 @@ public class FirebaseHandlerImpl implements FirebaseHandler {
     @Override
     public void destroy() {
 
+    }
+
+    private void updateUserProperty(String property, String value, final Callback<Void> callback) {
+
+//        try {
+//            if (mCurrentUser == null) {
+//                mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+//            }
+//
+//            mUsersRef.child(mCurrentUser.getUid()).child(property).setValue(value)
+//                    .addOnCompleteListener(task -> callback.onReponse(null))
+//                    .addOnFailureListener(e -> callback.onError());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            callback.onError();
+//        }
     }
 }

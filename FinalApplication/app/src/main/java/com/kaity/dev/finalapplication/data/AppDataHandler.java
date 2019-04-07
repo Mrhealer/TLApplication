@@ -116,6 +116,12 @@ public class AppDataHandler implements DataHandler {
                         mFirebaseHandler.destroy();
                     }
                 });
+
+
+                    fetchedQuiz.setRatedBy(5);
+                callback.onResponse(fetchedQuiz);
+                mFirebaseHandler.destroy();
+
             }
 
             @Override
