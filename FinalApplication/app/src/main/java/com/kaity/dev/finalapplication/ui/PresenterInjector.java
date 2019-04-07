@@ -6,8 +6,14 @@ import com.kaity.dev.finalapplication.ui.quizattempt.AttemptQuizContract;
 import com.kaity.dev.finalapplication.ui.quizattempt.AttemptQuizPresenter;
 import com.kaity.dev.finalapplication.ui.quizdetails.QuizDetailsContract;
 import com.kaity.dev.finalapplication.ui.quizdetails.QuizDetailsPresenter;
+import com.kaity.dev.finalapplication.ui.signin.SignInContract;
+import com.kaity.dev.finalapplication.ui.signin.SignInPresenter;
 
 public class PresenterInjector {
+
+    public static void injectSignInPresenter(SignInContract.View signInView) {
+        new SignInPresenter(signInView);
+    }
 
     public static void injectHomePresenter(HomeContract.View homeView) {
         new HomePresenter(homeView);

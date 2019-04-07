@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name=".ui.signin.SignInActivity"
             android:theme="@style/homeactivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +30,13 @@
         <activity android:name=".ui.notification.NotificationActivity" />
         <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.discussion.QuizDiscussionActivity" />
-        <activity android:name=".ui.quizattempt.AttemptQuizActivity"></activity>
+        <activity android:name=".ui.quizattempt.AttemptQuizActivity" />
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:theme="@style/homeactivity"></activity>
+        <activity
+            android:name=".ui.profile.UserProfileActivity"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
